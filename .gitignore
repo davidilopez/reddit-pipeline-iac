@@ -213,3 +213,4 @@ terraform.rc
 
 .env
 .vscode
+.DS_Store

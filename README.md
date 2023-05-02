@@ -13,8 +13,7 @@ Unfortunately, I ran into some time constraints, namely that I assigned 8 hours 
 - A scheduler in Cloud Scheduler to run the API every 72 hours.
 
 In the upcoming hours, I want to complete the following:
-- Set up a Dagster pipeline to run the API, replacing Cloud Scheduler.
-- Set up a data warehouse in Apache Druid to store the Reddit posts.
+- Set BigQuery as the data warehouse for the Reddit posts.
 - Set up an analytics platform in Apache Superset to visualize the Reddit posts.
 
 ## Running the project

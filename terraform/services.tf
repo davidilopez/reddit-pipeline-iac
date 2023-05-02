@@ -18,3 +18,10 @@ resource "google_project_service" "scheduler" {
 
   disable_dependent_services = true
 }
+
+resource "google_project_service" "bigquery" {
+  project = google_project.fedex_project.name
+  service = "bigquery.googleapis.com"
+
+  disable_dependent_services = true
+}

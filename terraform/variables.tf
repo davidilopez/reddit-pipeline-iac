@@ -12,3 +12,8 @@ variable "region" {
   type    = string
   default = "europe-west1"
 }
+
+variable "bq_dataset" {
+  type    = string
+  default = "reddit_posts"
+}

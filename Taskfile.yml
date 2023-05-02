@@ -1,0 +1,28 @@
+version: "3"
+
+vars:
+  CONTAINER_REGISTRY: europe-west1-docker.pkg.dev/dlm-fedex-reddit-pipeline-01/reddit-scraper
+
+dotenv:
+  - ./reddit_scraper/.env
+
+tasks:
+  build/api:
+    cmds:
+      - docker build -t {{.CONTAINER_REGISTRY}}/reddit-scraper-api -f ./reddit_scraper/Dockerfile ./reddit_scraper
+
+  upload/api:
+    cmds:
+      - docker push {{.CONTAINER_REGISTRY}}/reddit-scraper-api
+    status:
+      - docker pull {{.CONTAINER_REGISTRY}}/reddit-scraper-api
+    deps:
+      - build/api
+
+  deploy/service:
+    cmds:
+      - gcloud run deploy reddit-scraper-api --image {{.CONTAINER_REGISTRY}}/reddit-scraper-api:latest --update-env-vars CLIENT_ID=$CLIENT_ID,SECRET_TOKEN=$SECRET_TOKEN
+
+  update/service:
+    cmds:
+      - gcloud run services update reddit-scraper-api --update-env-vars CLIENT_ID=$CLIENT_ID,SECRET_TOKEN=$SECRET_TOKEN

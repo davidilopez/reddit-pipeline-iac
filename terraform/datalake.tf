@@ -19,6 +19,8 @@ resource "google_bigquery_table" "table" {
   table_id   = "reddit_posts"
   project    = google_project.fedex_project.name
 
+  deletion_protection = false
+
   schema = <<EOF
 [
   {

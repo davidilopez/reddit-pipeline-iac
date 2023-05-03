@@ -10,6 +10,8 @@ resource "google_bigquery_dataset" "dataset" {
   dataset_id = var.bq_dataset
   project    = google_project.fedex_project.name
   location   = var.region
+
+  depends_on = [google_project_service.bigquery]
 }
 
 resource "google_bigquery_table" "table" {
@@ -65,4 +67,6 @@ resource "google_bigquery_table" "table" {
   }
 ]
 EOF
+
+  depends_on = [google_bigquery_dataset.dataset]
 }

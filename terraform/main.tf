@@ -39,4 +39,6 @@ resource "google_cloud_scheduler_job" "job" {
     http_method = "GET"
     uri         = google_cloud_run_v2_service.reddit_scraper_api.uri
   }
+
+  depends_on = [google_project_service.scheduler, google_cloud_run_v2_service.reddit_scraper_api]
 }

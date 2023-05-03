@@ -11,10 +11,11 @@ Unfortunately, I ran into some time constraints, namely that I assigned 8 hours 
 - Create an API in Python to extract Reddit posts from the most popular horror subreddits.
 - A service in Cloud Run to run the API.
 - A scheduler in Cloud Scheduler to run the API every 72 hours.
+- An empty BigQuery dataset to store the Reddit posts.
 
-In the upcoming hours, I want to complete the following:
-- Set BigQuery as the data warehouse for the Reddit posts.
-- Set up an analytics platform in Apache Superset to visualize the Reddit posts.
+I was not able to complete the following:
+- Connect the BigQuery dataset to the Google Cloud Storage bucket.
+- Provision Apache Superset for visualization.
 
 ## Running the project
 ### Prerequisites

@@ -1,11 +1,10 @@
 version: "3"
 
+dotenv: [".env", "/reddit_scraper/.env"]
+
 vars:
-  CONTAINER_REGISTRY: europe-west1-docker.pkg.dev/dlm-fedex-reddit-pipeline-01/reddit-scraper
-
-dotenv:
-  - ./reddit_scraper/.env
-
+  CONTAINER_REGISTRY: europe-west1-docker.pkg.dev/{{.PROJECT_ID}}/reddit-scraper
+  
 tasks:
   build/api:
     cmds:

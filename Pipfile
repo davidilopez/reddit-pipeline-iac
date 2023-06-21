@@ -11,6 +11,7 @@ uvicorn = "*"
 gcsfs = "*"
 praw = "*"
 pandas = "*"
+psycopg2-binary = "*"
 
 [dev-packages]
 ipykernel = "*"

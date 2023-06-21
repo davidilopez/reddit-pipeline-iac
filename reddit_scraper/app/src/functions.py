@@ -1,6 +1,7 @@
 import datetime as dt
 import os
 from typing import List
+from psycopg2 import connect
 
 import pandas as pd
 import praw
@@ -57,3 +58,22 @@ def extract_subreddit_data(
     except Exception as e:
         logger.error("Error extracting data from subreddit", e=e)
     return pd.DataFrame(submissions)
+
+
+def insert_subreddit_data_to_pg(df: pd.DataFrame, table_name: str, pg_url: str) -> None:
+    try:
+        conn = connect(pg_url)
+        cur = conn.cursor()
+        df.to_sql(
+            table_name,
+            conn,
+            if_exists="append",
+            index=False,
+            method="multi",
+            chunksize=1000,
+        )
+        conn.commit()
+        cur.close()
+        conn.close()
+    except Exception as e:
+        logger.error("Error inserting data to postgres", e=e)

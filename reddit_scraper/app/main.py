@@ -1,13 +1,16 @@
 import datetime as dt
+import os
 from typing import List
 
 import structlog
 from fastapi import FastAPI
-from src.functions import extract_subreddit_data
+from src.functions import extract_subreddit_data, insert_subreddit_data_to_pg
 
 logger = structlog.get_logger()
 
 app = FastAPI()
+
+pg_url = os.getenv("PG_URL")
 
 
 @app.get("/")
@@ -23,16 +26,9 @@ async def main(subreddits: List[str] = None):
 
     # save data to parquet format
     try:
-        df.to_parquet(
-            f"{base_path}/reddit_data.pq",
-            engine="pyarrow",
-            compression="snappy",
-            partition_cols=["created_date", "subreddit"],
-            index=False,
-        )
-
-        logger.info("Data saved successfully to parquet format")
+        insert_subreddit_data_to_pg(df=df, table_name="reddit_posts", pg_url=pg_url)
+        logger.info("Data saved to Postgres")
         return {"status": "success"}
     except Exception as e:
-        logger.error("Error saving data to parquet format", e=e)
+        logger.error("Error saving data to Postgres", e=e)
         return {"status": "failed"}
